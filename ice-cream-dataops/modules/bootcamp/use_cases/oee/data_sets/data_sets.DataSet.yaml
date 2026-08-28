@@ -1,0 +1,3 @@
+- externalId: '{{ uc_oee_ds_external_id }}'
+  name: Overall Equipment Effectiveness Use Case
+  description: Dataset for OEE use case calculations
