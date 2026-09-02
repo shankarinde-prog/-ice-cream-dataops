@@ -1,0 +1,2 @@
+externalId: wf_icapi_data_pipeline
+description: Pipeline to extract Ice Cream Factory data, contextualize assets and timeseries, and calculate OEE metrics.

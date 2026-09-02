@@ -37,11 +37,10 @@ def get_time_series_for_site(client: CogniteClient, site: str, space: str, all_t
         return []
 
     # WORKAROUND: path=[] because path materializer is not running in this project.
-    # FIX: use startswith instead of 'in' to avoid cross-site prefix contamination.
-    # e.g. "CH" must not match "NUPRFIZ7CHSP463" (Nuremberg) for Chicago.
+    # Instead of Prefix filter on path, filter all_ts by 2-letter site prefix in external_id.
     time_series = [
         item for item in all_ts
-        if item.external_id.upper().startswith(this_site[:2].upper())  # ← FIXED
+        if this_site[:2].upper() in item.external_id.upper()
     ]
 
     if not time_series:
@@ -80,6 +79,8 @@ def handle(client: CogniteClient, data: Dict[str, Any] = {}) -> None:
 
     print(f"Processing datapoints for these sites: {sites}")
 
+    # FIX: Fetch ALL time series ONCE before the site loop to avoid repeated
+    # expensive API calls inside ThreadPoolExecutor (one per site = 10x)
     source_space = "icapi_dm_space"
     print("Fetching all time series from icapi_dm_space...")
     all_ts = client.data_modeling.instances.list(
@@ -112,6 +113,7 @@ def process_site(client, lookback_minutes, site, all_ts):
     instance_ids = [NodeId(space=source_space, external_id=ts.external_id) for ts in timeseries]
     all_latest_dps = client.time_series.data.retrieve_latest(instance_id=instance_ids)
 
+    # Organize latest datapoints by equipment for alignment
     assets_dps = {
         external_id: [
             latest_dp for latest_dp in all_latest_dps
@@ -205,6 +207,7 @@ def process_site(client, lookback_minutes, site, all_ts):
             try:
                 client.time_series.data.insert_multiple(to_insert)
             except CogniteNotFoundError as e:
+                # Create missing OEE timeseries since they don't exist yet
                 ts_to_create = []
                 for node_id in e.not_found:
                     print(f"Creating CogniteTimeSeries {node_id}")

@@ -1,0 +1,7 @@
+environment:
+  name: prod                    # ← changed from test
+  project: cdf-bootcamp-05-prod # ← changed from cdf-bootcamp-05-test
+  validation-type: prod         # ← changed from test
+  selected:
+    - bootcamp/ice_cream_api
+    - bootcamp/use_cases/oee
