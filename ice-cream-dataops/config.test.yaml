@@ -21,7 +21,7 @@ variables:
         icapi_extractors_source_id: ${ICAPI_EXTRACTORS_SOURCE_ID}
         tokenUri: ${IDP_TOKEN_URL}
         cdfProjectName: ${CDF_PROJECT}
-        scopes: ${IDP_SCOPES}
+        scopes: "https://westeurope-1.cognitedata.com/.default"
         icapi_trigger_client_id: ${ICAPI_EXTRACTORS_CLIENT_ID}
         icapi_trigger_client_secret: ${ICAPI_EXTRACTORS_CLIENT_SECRET}
         icapi_extractors_client_id: ${ICAPI_EXTRACTORS_CLIENT_ID}

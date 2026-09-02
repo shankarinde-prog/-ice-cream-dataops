@@ -16,4 +16,4 @@ authentication:
   clientSecret: {{ icapi_extractors_client_secret }}
   tokenUri: {{ tokenUri }}
   cdfProjectName: {{ cdfProjectName }}
-  scopes: https://westeurope-1.cognitedata.com/.default
+  scopes: "https://westeurope-1.cognitedata.com/.default"
