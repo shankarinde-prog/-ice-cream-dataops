@@ -33,6 +33,7 @@ jobs:
       IDP_TENANT_ID: 16e3985b-ebe8-4e24-9da4-933e21a9fc81
       IDP_TOKEN_URL: https://login.microsoftonline.com/16e3985b-ebe8-4e24-9da4-933e21a9fc81/oauth2/v2.0/token
       LOGIN_FLOW: client_credentials
+      IDP_SCOPES: https://westeurope-1.cognitedata.com/.default
       IDP_CLIENT_ID: ${{ vars.IDP_CLIENT_ID }}
       IDP_CLIENT_SECRET: ${{ secrets.IDP_CLIENT_SECRET }}
       DATA_DEVELOPER_SOURCE_ID: ${{ vars.DATA_DEVELOPER_SOURCE_ID }}
