@@ -47,8 +47,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Verify and Update Toolkit Authorization
-        run: yes | cdf auth verify
+        run: yes | cdf auth verify --verbose
       - name: Build Toolkit Configurations
         run: cd ice-cream-dataops && cdf build --env=${{ matrix.environment }}
       - name: Deploy Toolkit Configurations
-        run: cd ice-cream-dataops && cdf deploy --env=${{ matrix.environment }}
+        run: cd ice-cream-dataops && cdf deploy --env=${{ matrix.environment }} --verbose
